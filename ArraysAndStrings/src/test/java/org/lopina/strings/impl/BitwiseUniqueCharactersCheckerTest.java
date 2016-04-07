@@ -31,8 +31,14 @@ public class BitwiseUniqueCharactersCheckerTest extends UniqueCharacterCheckerTe
     public void reallyLargeAndTrickyStringShouldBeIdentifiedAsNotHavingUniqueCharacters() throws Exception {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (char c = 'a'; c <= 'z'; c++) {
-            stringBuilder.append(c);
+        for (char c4 = 0; c4 < 2; c4++) {
+            for (char c3 = 'a'; c3 <= 'z'; c3++) {
+                for (char c2 = 'a'; c2 <= 'z'; c2++) {
+                    for (char c1 = 'a'; c1 <= 'z'; c1++) {
+                        stringBuilder.append(c1);
+                    }
+                }
+            }
         }
 
         stringBuilder.append('z');
