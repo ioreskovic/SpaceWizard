@@ -5,7 +5,10 @@
   <groupId>org.lopina</groupId>
   <artifactId>SpaceWizard</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+    <modules>
+        <module>ArraysAndStrings</module>
+    </modules>
+    <packaging>pom</packaging>
 
   <name>SpaceWizard</name>
   <url>https://github.com/ioreskovic/SpaceWizard/</url>
