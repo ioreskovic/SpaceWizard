@@ -5,7 +5,7 @@ import org.lopina.strings.UniqueCharactersChecker;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapBasedUniqueCharacterChecker implements UniqueCharactersChecker {
+public class MapBasedUniqueCharactersChecker implements UniqueCharactersChecker {
     public boolean test(String s) {
         Map<Character, Integer> countMap = new HashMap<Character, Integer>();
 

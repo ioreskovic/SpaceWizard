@@ -7,7 +7,7 @@ import org.junit.runners.BlockJUnit4ClassRunner;
 
 @RunWith(BlockJUnit4ClassRunner.class)
 public abstract class UniqueCharacterCheckerTest {
-    abstract UniqueCharactersChecker getUniqueCharacterChecker();
+    protected abstract UniqueCharactersChecker getUniqueCharacterChecker();
 
     @Test(expected = NullPointerException.class)
     public void nullPointerExceptionShouldBeThrownOnNullStringArgument() throws Exception {
