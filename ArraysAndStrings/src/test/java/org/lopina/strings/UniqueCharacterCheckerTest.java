@@ -19,8 +19,9 @@ public abstract class UniqueCharacterCheckerTest {
 
     void logInfo(Description description, String status, long nanos) {
         String testName = description.getMethodName();
-        logger.info(String.format("Test %s %s, spent %d microseconds",
-                testName, status, TimeUnit.NANOSECONDS.toMicros(nanos)));
+        String className = description.getClassName();
+        logger.info(String.format("Test %s#%s %s, spent %d microseconds",
+                className, testName, status, TimeUnit.NANOSECONDS.toMicros(nanos)));
     }
 
     @Rule
@@ -93,7 +94,9 @@ public abstract class UniqueCharacterCheckerTest {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < 255; i++) {
-            stringBuilder.append((char) i);
+            for (int j = 0; j < 255; j++) {
+                stringBuilder.append((char) j);
+            }
         }
 
         stringBuilder.append((char) 254);

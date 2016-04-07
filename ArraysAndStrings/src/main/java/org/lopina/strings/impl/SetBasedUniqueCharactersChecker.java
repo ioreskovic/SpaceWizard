@@ -9,6 +9,10 @@ public class SetBasedUniqueCharactersChecker implements UniqueCharactersChecker 
     public boolean test(String s) {
         Set<Character> characterSet = new HashSet<Character>();
         for (Character c : s.toCharArray()) {
+            if (characterSet.contains(c)) {
+                return false;
+            }
+
             characterSet.add(c);
         }
 
