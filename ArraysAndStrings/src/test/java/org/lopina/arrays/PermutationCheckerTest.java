@@ -1,4 +1,4 @@
-package org.lopina.arrays.impl;
+package org.lopina.arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
