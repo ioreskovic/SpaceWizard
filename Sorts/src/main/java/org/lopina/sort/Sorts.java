@@ -2,6 +2,7 @@ package org.lopina.sort;
 
 import org.lopina.sort.impl.InsertionSort;
 import org.lopina.sort.impl.SelectionSort;
+import org.lopina.sort.impl.ShellSort;
 
 public final class Sorts {
     private Sorts() {
@@ -20,7 +21,11 @@ public final class Sorts {
     }
 
     public static <T> Sort<T> shell() {
-        return null;
+        return new ShellSort<T>();
+    }
+
+    public static <T> Sort<T> shell(ShellSort.StepStrategy stepStrategy) {
+        return new ShellSort<T>(stepStrategy);
     }
 
     public static <T> Sort<T> quick() {
