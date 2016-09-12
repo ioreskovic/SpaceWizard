@@ -27,19 +27,19 @@ public abstract class StringCompressorTest {
 
     @Test
     public void compressingCompressableStringShouldReturnCopressedString() throws Exception {
-        String input = "AABCCCCCAAA";
+        String input = "AABBCCDDAA";
         StringCompressor stringCompressor = getStringCompressor();
         String output = stringCompressor.compress(input);
-        String expected = "A2B1C5A3";
+        String expected = "A2B2C2D2A2";
         Assert.assertEquals(expected, output);
     }
 
     @Test
     public void compressingNonCompressableStringShouldReturnOriginalString() throws Exception {
-        String input = "AABBCCDD";
+        String input = "ABCD";
         StringCompressor stringCompressor = getStringCompressor();
         String output = stringCompressor.compress(input);
-        String expected = "AABBCCDD";
+        String expected = "ABCD";
         Assert.assertEquals(expected, output);
     }
 }

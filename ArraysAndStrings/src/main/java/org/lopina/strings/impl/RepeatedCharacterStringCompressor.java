@@ -29,7 +29,7 @@ public class RepeatedCharacterStringCompressor implements StringCompressor {
 
         write(sb, lastRead, lastCount);
 
-        if (sb.length() < input.length()) {
+        if (sb.length() <= input.length()) {
             return sb.toString();
         }
 
