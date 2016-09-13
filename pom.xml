@@ -9,6 +9,7 @@
     <modules>
         <module>ArraysAndStrings</module>
         <module>Sorts</module>
+        <module>LinkedLists</module>
     </modules>
     <packaging>pom</packaging>
 
