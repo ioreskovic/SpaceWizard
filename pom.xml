@@ -11,6 +11,7 @@
         <module>Sorts</module>
         <module>LinkedLists</module>
         <module>StacksAndQueues</module>
+        <module>TreesAndGraphs</module>
     </modules>
     <packaging>pom</packaging>
 
