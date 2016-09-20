@@ -10,6 +10,7 @@
         <module>ArraysAndStrings</module>
         <module>Sorts</module>
         <module>LinkedLists</module>
+        <module>StacksAndQueues</module>
     </modules>
     <packaging>pom</packaging>
 
