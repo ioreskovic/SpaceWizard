@@ -19,6 +19,8 @@ public class EmptyTest
         Assert.assertEquals(0, empty.size());
         Assert.assertEquals(0, empty.height());
         Assert.assertFalse(empty.contains(0));
+        Assert.assertTrue(empty.isBalanced());
+        Assert.assertTrue(empty.isSearchable());
     }
 
     @Test
@@ -26,6 +28,8 @@ public class EmptyTest
         Empty<Integer> empty = BinaryTree.empty();
         Empty<Integer> result = empty.remove(0);
         Assert.assertSame(empty, result);
+        Assert.assertTrue(empty.isBalanced());
+        Assert.assertTrue(empty.isSearchable());
     }
 
     @Test
@@ -39,6 +43,8 @@ public class EmptyTest
         Assert.assertEquals(1, result.height());
         Assert.assertTrue(result.contains(elem));
         Assert.assertEquals(elem, result.elem());
+        Assert.assertTrue(result.isBalanced());
+        Assert.assertTrue(result.isSearchable());
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -63,5 +69,30 @@ public class EmptyTest
     public void fetchingRightChildShouldThrowExceptionWhenCalledOnEmptyNode() throws Exception {
         Empty<Integer> empty = BinaryTree.empty();
         empty.right();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void minOfEmptyTreeShouldThrowException() throws Exception {
+        BinaryTree.<Integer>empty().min();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void maxOfEmptyTreeShouldThrowException() throws Exception {
+        BinaryTree.<Integer>empty().max();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void predecessorOfEmptyTreeShouldThrowException() throws Exception {
+        BinaryTree.<Integer>empty().predecessor();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void successorOfEmptyTreeShouldThrowException() throws Exception {
+        BinaryTree.<Integer>empty().successor();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void applyOnEmptyTreeShouldThrowException() throws Exception {
+        BinaryTree.<Integer>empty().apply(0);
     }
 }

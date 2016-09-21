@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
+import java.util.NoSuchElementException;
+
 @RunWith(BlockJUnit4ClassRunner.class)
 public class LeafTest
 {
@@ -86,5 +88,47 @@ public class LeafTest
         Assert.assertEquals(leaf.contains(elem), result.contains(elem));
         Assert.assertEquals(leaf.elem(), result.elem());
         Assert.assertTrue(result.contains(newElem));
+    }
+
+    @Test
+    public void minOfLeafShouldBeLeafElement() throws Exception {
+        final Integer elem = 4;
+        Leaf<Integer> leaf = BinaryTree.leaf(elem);
+        Assert.assertEquals(elem, leaf.min());
+    }
+
+    @Test
+    public void maxOfLeafShouldBeLeafElement() throws Exception {
+        final Integer elem = 4;
+        Leaf<Integer> leaf = BinaryTree.leaf(elem);
+        Assert.assertEquals(elem, leaf.max());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void predecessorOfLeafShouldThrowException() throws Exception {
+        final Integer elem = 4;
+        Leaf<Integer> leaf = BinaryTree.leaf(elem);
+        leaf.predecessor();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void successorOfLeafShouldThrowException() throws Exception {
+        final Integer elem = 4;
+        Leaf<Integer> leaf = BinaryTree.leaf(elem);
+        leaf.successor();
+    }
+
+    @Test
+    public void applyOnLeafShouldBeLeafElementWhenZerothRequested() throws Exception {
+        final Integer elem = 4;
+        Leaf<Integer> leaf = BinaryTree.leaf(elem);
+        Assert.assertEquals(elem, leaf.apply(0));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void applyOnLeafShouldThrowExceptionWhenOtherThanZerothRequested() throws Exception {
+        final Integer elem = 4;
+        Leaf<Integer> leaf = BinaryTree.leaf(elem);
+        leaf.apply(1);
     }
 }
