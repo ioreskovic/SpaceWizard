@@ -1,8 +1,6 @@
 package org.lopina.tree.binary;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class Leaf<T extends Comparable<T>> extends BinaryTree<T>
 {
@@ -93,6 +91,16 @@ public class Leaf<T extends Comparable<T>> extends BinaryTree<T>
         } else {
             return this;
         }
+    }
+
+    @Override
+    public Set<Deque<T>> bstSequences()
+    {
+        Deque<T> bstSeq = new ArrayDeque<>();
+        bstSeq.add(elem);
+        Set<Deque<T>> resultSet = new HashSet<>();
+        resultSet.add(bstSeq);
+        return resultSet;
     }
 
     @Override

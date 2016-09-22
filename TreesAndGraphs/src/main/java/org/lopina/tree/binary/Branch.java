@@ -2,9 +2,7 @@ package org.lopina.tree.binary;
 
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class Branch<T extends Comparable<T>> extends BinaryTree<T>
 {
@@ -190,6 +188,21 @@ public class Branch<T extends Comparable<T>> extends BinaryTree<T>
     public T successor()
     {
         return right().min();
+    }
+
+    public Set<Deque<T>> bstSequences() {
+        Set<Deque<T>> leftSeq = left().bstSequences();
+        Set<Deque<T>> rightSeq = right().bstSequences();
+        Set<Deque<T>> weavedSeq = new HashSet<>();
+        for (Deque<T> ls : leftSeq) {
+            for (Deque<T> rs : rightSeq) {
+                weavedSeq.addAll(weave(ls, rs));
+            }
+        }
+
+        weavedSeq.forEach(ts -> ts.offerFirst(elem()));
+
+        return weavedSeq;
     }
 
     @Override

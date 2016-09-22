@@ -587,4 +587,89 @@ public class BinaryTreeTest
         Iterable<Integer> result = tree.pathBetween(8, 18);
     }
 
+    @Test
+    public void testWeave() throws Exception {
+        ArrayDeque<Integer> t1 = new ArrayDeque<Integer>() {{
+            offerLast(1);
+            offerLast(2);
+        }};
+
+        ArrayDeque<Integer> t2 = new ArrayDeque<Integer>() {{
+            offerLast(3);
+            offerLast(4);
+        }};
+
+        Set<Deque<Integer>> result = BinaryTree.weave(t1, t2);
+        System.out.println(result);
+    }
+
+    @Test
+    public void testWeave2() throws Exception {
+        ArrayDeque<Integer> t1 = new ArrayDeque<Integer>() {{
+            offerLast(1);
+            offerLast(2);
+        }};
+
+        ArrayDeque<Integer> t2 = new ArrayDeque<Integer>() {{
+            offerLast(3);
+            offerLast(4);
+        }};
+
+        ArrayDeque<Integer> t3 = new ArrayDeque<Integer>() {{
+            offerLast(5);
+            offerLast(6);
+        }};
+
+        List<Deque<Integer>> ts = new ArrayList<>();
+        ts.add(t1);
+        ts.add(t2);
+        ts.add(t3);
+
+        Set<Deque<Integer>> s1 = new HashSet<>();
+        s1.add(ts.get(0));
+
+        for (int i = 1; i < ts.size(); i++) {
+            Set<Deque<Integer>> s2 = new HashSet<>();
+            s2.add(ts.get(i));
+            Set<Deque<Integer>> resultsIter = new HashSet<>();
+            for (Deque<Integer> a : s1) {
+                for (Deque<Integer> b : s2) {
+                    resultsIter.addAll(BinaryTree.weave(a, b));
+                }
+            }
+            s1 = resultsIter;
+        }
+
+        System.out.println(s1);
+        System.out.println(s1.size());
+    }
+
+    @Test
+    public void testBstSequencesEmpty() throws Exception {
+        Set<Deque<Integer>> bstSeq = BinaryTree.<Integer>empty().bstSequences();
+        System.out.println(bstSeq);
+        System.out.println(bstSeq.size());
+    }
+
+    @Test
+    public void testBstSequencesLeaf() throws Exception {
+        Set<Deque<Integer>> bstSeq = BinaryTree.leaf(4).bstSequences();
+        System.out.println(bstSeq);
+        System.out.println(bstSeq.size());
+    }
+
+    @Test
+    public void testBstSequencesBranch() throws Exception {
+        Set<Deque<Integer>> bstSeq = BinaryTree.branch(BinaryTree.leaf(1), 2, BinaryTree.leaf(3)).bstSequences();
+        System.out.println(bstSeq);
+        System.out.println(bstSeq.size());
+    }
+
+    @Test
+    public void testBstSequencesTree() throws Exception {
+        Set<Deque<Integer>> bstSeq = BinaryTree.<Integer>empty().add(4).add(2).add(6).add(1).add(3).add(5).add(7).bstSequences();
+        System.out.println(bstSeq);
+        System.out.println(bstSeq.size());
+    }
+
 }

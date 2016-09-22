@@ -3,6 +3,7 @@ package org.lopina.tree.binary;
 import org.lopina.tree.Tree;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class BinaryTree<T extends Comparable<T>> implements Tree<T>
 {
@@ -221,6 +222,8 @@ public abstract class BinaryTree<T extends Comparable<T>> implements Tree<T>
         }
     }
 
+    public abstract Set<Deque<T>> bstSequences();
+
     private void pathPrepend(T x, ArrayDeque<T> result)
     {
         if (isEmpty()) {
@@ -258,4 +261,38 @@ public abstract class BinaryTree<T extends Comparable<T>> implements Tree<T>
             }
         }
     }
+
+    public static <E> Set<Deque<E>> weave(Deque<E> xs, Deque<E> ys) {
+        Set<Deque<E>> results = new HashSet<>();
+        weave(xs, ys, new ArrayDeque<E>(), results);
+
+        return results;
+    }
+
+    private static <E> void weave(Deque<E> xs, Deque<E> ys, ArrayDeque<E> prefix, Set<Deque<E>> results)
+    {
+        if (xs.isEmpty() && ys.isEmpty()) {
+            results.add(prefix);
+        } else {
+            if (!xs.isEmpty()) {
+                ArrayDeque<E> xs1 = new ArrayDeque<>(xs);
+                ArrayDeque<E> ys1 = new ArrayDeque<>(ys);
+                ArrayDeque<E> prefix1 = new ArrayDeque<>(prefix);
+                E x = xs1.pollFirst();
+                prefix1.offerLast(x);
+                weave(xs1, ys1, prefix1, results);
+            }
+
+            if (!ys.isEmpty()) {
+                ArrayDeque<E> xs2 = new ArrayDeque<>(xs);
+                ArrayDeque<E> ys2 = new ArrayDeque<>(ys);
+                ArrayDeque<E> prefix2 = new ArrayDeque<>(prefix);
+                E y = ys2.pollFirst();
+                prefix2.offerLast(y);
+                weave(xs2, ys2, prefix2, results);
+            }
+        }
+    }
+
+
 }
