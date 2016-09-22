@@ -2,9 +2,7 @@ package org.lopina.tree.binary;
 
 import org.lopina.tree.Tree;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public abstract class BinaryTree<T extends Comparable<T>> implements Tree<T>
 {
@@ -96,6 +94,167 @@ public abstract class BinaryTree<T extends Comparable<T>> implements Tree<T>
                 return elem();
             } else {
                 throw new NoSuchElementException();
+            }
+        }
+    }
+
+    @Override
+    public T successor(T elem)
+    {
+        return successorForwardFind(elem, this, new ArrayDeque<BinaryTree<T>>());
+    }
+
+    private T successorForwardFind(T x, BinaryTree<T> t, Deque<BinaryTree<T>> p)
+    {
+        if (t.isEmpty()) {
+            throw new NoSuchElementException();
+        } else {
+            int cmp = x.compareTo(t.elem());
+            if (cmp < 0) {
+                p.push(t);
+                return successorForwardFind(x, t.left(), p);
+            } else if (cmp > 0) {
+                p.push(t);
+                return successorForwardFind(x, t.right(), p);
+            } else if (t.right().nonEmpty()) {
+                return t.successor();
+            } else {
+                return successorBackwardReturn(t, p);
+            }
+        }
+    }
+
+    private T successorBackwardReturn(BinaryTree<T> t, Deque<BinaryTree<T>> p)
+    {
+        if (p.isEmpty()) {
+            throw new NoSuchElementException("No successor");
+        } else {
+            BinaryTree<T> parent = p.pop();
+            if (t == parent.right()) {
+                return successorBackwardReturn(parent, p);
+            } else {
+                return parent.elem();
+            }
+        }
+    }
+
+    @Override
+    public T predecessor(T elem)
+    {
+        return predecessorForwardFind(elem, this, new ArrayDeque<>());
+    }
+
+    private T predecessorForwardFind(T x, BinaryTree<T> t, Deque<BinaryTree<T>> p)
+    {
+        if (t.isEmpty()) {
+            throw new NoSuchElementException();
+        } else {
+            int cmp = x.compareTo(t.elem());
+
+            if (cmp < 0) {
+                p.push(t);
+                return predecessorForwardFind(x, t.left(), p);
+            } else if (cmp > 0) {
+                p.push(t);
+                return predecessorForwardFind(x, t.right(), p);
+            } else if (t.left().nonEmpty()) {
+                return t.predecessor();
+            } else {
+                return predecessorBackwardReturn(t, p);
+            }
+        }
+    }
+
+    protected T predecessorBackwardReturn(BinaryTree<T> t, Deque<BinaryTree<T>> p) {
+        if (p.isEmpty()) {
+            throw new NoSuchElementException("No predecessor");
+        } else {
+            BinaryTree<T> parent = p.pop();
+
+            if (t == parent.left()) {
+                return predecessorBackwardReturn(parent, p);
+            } else {
+                return parent.elem();
+            }
+        }
+    }
+
+    @Override
+    public T nthMin(int n)
+    {
+        return apply(n);
+    }
+
+    @Override
+    public T nthMax(int n)
+    {
+        return apply(size() - n - 1);
+    }
+
+    @Override
+    public Iterable<T> pathBetween(T a, T b)
+    {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        } else {
+            int aCmp = a.compareTo(elem());
+            int bCmp = b.compareTo(elem());
+
+            if (aCmp < 0 && bCmp < 0) {
+                return left().pathBetween(a, b);
+            } else if (aCmp > 0 && bCmp > 0) {
+                return right().pathBetween(a, b);
+            } else {
+                ArrayDeque<T> result = new ArrayDeque<>();
+                result.add(elem());
+
+                if (aCmp < 0 && bCmp > 0) {
+                    left().pathPrepend(a, result);
+                    right().pathAppend(b, result);
+                } else if (bCmp < 0 && aCmp > 0) {
+                    left().pathAppend(b, result);
+                    right().pathPrepend(a, result);
+                }
+
+                return result;
+            }
+        }
+    }
+
+    private void pathPrepend(T x, ArrayDeque<T> result)
+    {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        } else {
+            int cmp = x.compareTo(elem());
+
+            result.offerFirst(elem());
+
+            if (cmp < 0) {
+                left().pathPrepend(x, result);
+            } else if (cmp > 0) {
+                right().pathPrepend(x, result);
+            } else {
+                return;
+            }
+        }
+    }
+
+    private void pathAppend(T x, ArrayDeque<T> result)
+    {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        } else {
+            int cmp = x.compareTo(elem());
+
+            result.offerLast(elem());
+
+            if (cmp < 0) {
+                left().pathAppend(x, result);
+            } else if (cmp > 0) {
+                right().pathAppend(x, result);
+            } else {
+                return;
             }
         }
     }

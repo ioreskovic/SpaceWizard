@@ -17,7 +17,12 @@ public interface Tree<T extends Comparable<T>>
     T min();
     T max();
     T apply(int n);
+    T nthMin(int n);
+    T nthMax(int n);
     T predecessor();
+    T predecessor(T elem);
     T successor();
+    T successor(T elem);
     T ancestor(T a, T b);
+    Iterable<T> pathBetween(T a, T b);
 }

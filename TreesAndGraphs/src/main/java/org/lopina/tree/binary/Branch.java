@@ -174,7 +174,7 @@ public class Branch<T extends Comparable<T>> extends BinaryTree<T>
         if (n < left().size()) {
             return left().apply(n);
         } else if (n > left().size()) {
-            return right().apply(size() - left().size() - 1);
+            return right().apply(n - left().size() - 1);
         } else {
             return elem;
         }

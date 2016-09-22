@@ -92,4 +92,36 @@ public class BranchTest
         Assert.assertEquals(branch.size() - 1, result.size());
         Assert.assertFalse(result.contains(elem));
     }
+
+    @Test
+    public void minimumOfATreeShouldBeMinimumOfItsLeftSubtreeWhenItExists() throws Exception {
+        BinaryTree<Integer> leftSubtree = BinaryTree.<Integer>empty().add(2).add(1).add(3);
+        Integer elem = 4;
+        BinaryTree<Integer> branch = BinaryTree.branch(leftSubtree, elem, BinaryTree.<Integer>empty());
+        Assert.assertEquals(leftSubtree.min(), branch.min());
+    }
+
+    @Test
+    public void minimumOfATreeShouldBeItsElementWhenLeftSubtreeDoesntExists() throws Exception {
+        BinaryTree<Integer> rightSubtree = BinaryTree.<Integer>empty().add(6).add(5).add(7);
+        Integer elem = 4;
+        BinaryTree<Integer> branch = BinaryTree.branch(BinaryTree.<Integer>empty(), elem, rightSubtree);
+        Assert.assertEquals(elem, branch.min());
+    }
+
+    @Test
+    public void maximumOfATreeShouldBeMaximumOfItsRightSubtreeWhenItExists() throws Exception {
+        BinaryTree<Integer> rightSubtree = BinaryTree.<Integer>empty().add(6).add(5).add(7);
+        Integer elem = 4;
+        BinaryTree<Integer> branch = BinaryTree.branch(BinaryTree.<Integer>empty(), elem, rightSubtree);
+        Assert.assertEquals(rightSubtree.max(), branch.max());
+    }
+
+    @Test
+    public void maximumOfATreeShouldBeItsElementWhenRightSubtreeDoesntExists() throws Exception {
+        BinaryTree<Integer> leftSubtree = BinaryTree.<Integer>empty().add(2).add(1).add(3);
+        Integer elem = 4;
+        BinaryTree<Integer> branch = BinaryTree.branch(leftSubtree, elem, BinaryTree.<Integer>empty());
+        Assert.assertEquals(elem, branch.max());
+    }
 }
