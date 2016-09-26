@@ -672,4 +672,20 @@ public class BinaryTreeTest
         System.out.println(bstSeq.size());
     }
 
+    @Test
+    public void randomShouldReturnRandomValueFromTheTree() throws Exception {
+        Integer[] elems = new Integer[] {
+                2, 4, 6, 8, 10, 12, 14
+        };
+
+        Set<Integer> elemsSet = new HashSet<>(Arrays.asList(elems));
+
+        Assert.assertTrue(elemsSet.contains(BinaryTree.make(elems).random()));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void randomOnEmptyTreeShouldThrowExceptioN() throws Exception {
+        BinaryTree.<Integer>empty().random();
+    }
+
 }

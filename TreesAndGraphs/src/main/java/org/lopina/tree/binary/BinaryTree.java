@@ -294,5 +294,11 @@ public abstract class BinaryTree<T extends Comparable<T>> implements Tree<T>
         }
     }
 
-
+    @Override
+    public T random()
+    {
+        Random randGen = new Random(System.currentTimeMillis());
+        int n = randGen.nextInt(size());
+        return apply(n);
+    }
 }

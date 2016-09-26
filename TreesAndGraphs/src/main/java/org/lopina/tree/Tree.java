@@ -1,5 +1,7 @@
 package org.lopina.tree;
 
+import java.util.List;
+
 public interface Tree<T extends Comparable<T>>
 {
     T elem();
@@ -17,6 +19,7 @@ public interface Tree<T extends Comparable<T>>
     T min();
     T max();
     T apply(int n);
+    T random();
     T nthMin(int n);
     T nthMax(int n);
     T predecessor();
