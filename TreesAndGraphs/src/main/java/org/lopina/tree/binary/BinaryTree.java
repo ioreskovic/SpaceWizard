@@ -301,4 +301,64 @@ public abstract class BinaryTree<T extends Comparable<T>> implements Tree<T>
         int n = randGen.nextInt(size());
         return apply(n);
     }
+
+    public static List<Iterable<Integer>> pathSum(BinaryTree<Integer> t, int n)
+    {
+        List<Iterable<Integer>> pathSum = new ArrayList<>();
+        return pathSum(t, n, new SumSeq());
+    }
+
+    private static List<Iterable<Integer>> pathSum(BinaryTree<Integer> t, Integer n, SumSeq path)
+    {
+        if (t.size() == 1) {
+            if (n.equals(path.sum + t.elem())) {
+                List<Iterable<Integer>> pathSumInitial = new ArrayList<>();
+                pathSumInitial.add(path.copy().append(t.elem()).seq());
+                return pathSumInitial;
+            } else {
+                return new ArrayList<>();
+            }
+        } else {
+            List<Iterable<Integer>> pathSumComposite = new ArrayList<>();
+            pathSumComposite.addAll(pathSum(t.left(), n, path.copy().append(t.elem())));
+            pathSumComposite.addAll(pathSum(t.right(), n, path.copy().append(t.elem())));
+
+            return pathSumComposite;
+        }
+    }
+
+    private static class SumSeq {
+        private ArrayDeque<Integer> seq;
+        private Integer sum;
+
+        private SumSeq(ArrayDeque<Integer> seq, Integer sum) {
+            this.seq = new ArrayDeque<>(seq);
+            this.sum = sum;
+        }
+
+        SumSeq() {
+            this.seq = new ArrayDeque<>();
+            this.sum = 0;
+        }
+
+        SumSeq append(Integer elem) {
+            seq.offerLast(elem);
+            sum = sum + elem;
+            return this;
+        }
+
+        public Integer sum()
+        {
+            return sum;
+        }
+
+        public ArrayDeque<Integer> seq()
+        {
+            return seq;
+        }
+
+        public SumSeq copy() {
+            return new SumSeq(seq, sum);
+        }
+    }
 }

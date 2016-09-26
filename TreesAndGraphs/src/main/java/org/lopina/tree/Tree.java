@@ -1,7 +1,5 @@
 package org.lopina.tree;
 
-import java.util.List;
-
 public interface Tree<T extends Comparable<T>>
 {
     T elem();

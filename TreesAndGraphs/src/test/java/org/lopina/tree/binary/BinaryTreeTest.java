@@ -684,8 +684,18 @@ public class BinaryTreeTest
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void randomOnEmptyTreeShouldThrowExceptioN() throws Exception {
+    public void randomOnEmptyTreeShouldThrowException() throws Exception {
         BinaryTree.<Integer>empty().random();
+    }
+
+    @Test
+    public void pathSumShouldCollectAllRootToLeafPathsWithCorrectSum() throws Exception {
+        BinaryTree<Integer> tree = BinaryTree.branch(BinaryTree.branch(BinaryTree.leaf(3), 2, BinaryTree.leaf(3)), 1,
+                BinaryTree.branch(BinaryTree.leaf(3), 2, BinaryTree.leaf(4)));
+
+        List<Iterable<Integer>> pathSums = BinaryTree.pathSum(tree, 6);
+        System.out.println(pathSums);
+        Assert.assertEquals(3, pathSums.size());
     }
 
 }
