@@ -103,7 +103,7 @@ public class Empty<T extends Comparable<T>> extends BinaryTree<T>
     @Override
     public T random()
     {
-        throw new NoSuchElementException("Empty tree has no successor element");
+        throw new NoSuchElementException("Empty tree has no random element");
     }
 
     @Override
