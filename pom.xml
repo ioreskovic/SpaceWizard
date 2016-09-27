@@ -12,6 +12,7 @@
         <module>LinkedLists</module>
         <module>StacksAndQueues</module>
         <module>TreesAndGraphs</module>
+        <module>BitManipulation</module>
     </modules>
     <packaging>pom</packaging>
 
