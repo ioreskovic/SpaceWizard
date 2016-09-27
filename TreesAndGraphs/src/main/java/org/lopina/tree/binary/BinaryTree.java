@@ -3,7 +3,6 @@ package org.lopina.tree.binary;
 import org.lopina.tree.Tree;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public abstract class BinaryTree<T extends Comparable<T>> implements Tree<T>
 {
@@ -311,15 +310,25 @@ public abstract class BinaryTree<T extends Comparable<T>> implements Tree<T>
     private static List<Iterable<Integer>> pathSum(BinaryTree<Integer> t, Integer n, SumSeq path)
     {
         if (t.size() == 1) {
-            if (n.equals(path.sum + t.elem())) {
+            if (n.equals(path.sum + t.elem()) && !path.seq().isEmpty()) {
                 List<Iterable<Integer>> pathSumInitial = new ArrayList<>();
                 pathSumInitial.add(path.copy().append(t.elem()).seq());
                 return pathSumInitial;
             } else {
                 return new ArrayList<>();
             }
+        } else if (t.isEmpty()) {
+            if (n.equals(path.sum) && !path.seq().isEmpty()) {
+                List<Iterable<Integer>> pathSumInitial = new ArrayList<>();
+                pathSumInitial.add(path.copy().seq());
+                return pathSumInitial;
+            } else {
+                return new ArrayList<>();
+            }
         } else {
             List<Iterable<Integer>> pathSumComposite = new ArrayList<>();
+            pathSumComposite.addAll(pathSum(t.left(), n, new SumSeq()));
+            pathSumComposite.addAll(pathSum(t.right(), n, new SumSeq()));
             pathSumComposite.addAll(pathSum(t.left(), n, path.copy().append(t.elem())));
             pathSumComposite.addAll(pathSum(t.right(), n, path.copy().append(t.elem())));
 
@@ -327,7 +336,7 @@ public abstract class BinaryTree<T extends Comparable<T>> implements Tree<T>
         }
     }
 
-    private static class SumSeq {
+    static class SumSeq {
         private ArrayDeque<Integer> seq;
         private Integer sum;
 

@@ -690,12 +690,44 @@ public class BinaryTreeTest
 
     @Test
     public void pathSumShouldCollectAllRootToLeafPathsWithCorrectSum() throws Exception {
-        BinaryTree<Integer> tree = BinaryTree.branch(BinaryTree.branch(BinaryTree.leaf(3), 2, BinaryTree.leaf(3)), 1,
-                BinaryTree.branch(BinaryTree.leaf(3), 2, BinaryTree.leaf(4)));
+        BinaryTree<Integer> tree = BinaryTree.branch(
+                BinaryTree.branch(
+                        BinaryTree.branch(
+                                BinaryTree.leaf(2),
+                                2,
+                                BinaryTree.empty()
+                        ),
+                        2,
+                        BinaryTree.leaf(4)
+                ),
+                2,
+                BinaryTree.branch(BinaryTree.branch(BinaryTree.leaf(1), 3, BinaryTree.empty()), 4, BinaryTree.leaf(4))
+        );
 
-        List<Iterable<Integer>> pathSums = BinaryTree.pathSum(tree, 6);
+        System.out.println(tree);
+
+        List<Iterable<Integer>> pathSums = BinaryTree.pathSum(tree, 8);
         System.out.println(pathSums);
-        Assert.assertEquals(3, pathSums.size());
+        Assert.assertEquals(4, pathSums.size());
     }
 
+    @Test
+    public void pathSumShouldReturnEmptyResultListOnEmptyTree() throws Exception {
+        List<Iterable<Integer>> pathSums = BinaryTree.<Integer>pathSum(BinaryTree.<Integer>empty(), 0);
+        Assert.assertEquals(0, pathSums.size());
+    }
+
+    @Test
+    public void pathSumShouldReturnResultSetWhenEncounteredEmptyNode() throws Exception {
+        BinaryTree<Integer> tree = BinaryTree.<Integer>empty().add(2).add(1);
+        List<Iterable<Integer>> pathSums = BinaryTree.pathSum(tree, 2);
+        Assert.assertEquals(1, pathSums.size());
+    }
+
+    @Test
+    public void sumSeqShouldBeInitializedEmpty() throws Exception {
+        BinaryTree.SumSeq sumSeq = new BinaryTree.SumSeq();
+        Assert.assertEquals(Integer.valueOf(0), sumSeq.sum());
+        Assert.assertTrue(sumSeq.seq().isEmpty());
+    }
 }
