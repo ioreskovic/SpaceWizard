@@ -1,5 +1,7 @@
 package org.lopina;
 
+import java.util.*;
+
 public class BitOps
 {
     public static boolean getBitAt(int num, int i) {
@@ -81,4 +83,28 @@ public class BitOps
         return sb.toString();
 
     }
+
+    public static int maxFlip(int n) {
+        if (~n == 0) {
+            return Integer.BYTES * 8;
+        }
+
+        int currentLength = 0;
+        int previousLength = 0;
+        int maxLength = 1;
+
+        while (n != 0) {
+            if ((n & 1) == 1) {
+                currentLength++;
+            } else if ((n & 1) == 0) {
+                previousLength = ((n & 2) == 0) ? 0 : currentLength;
+                currentLength = 0;
+            }
+            maxLength = Math.max(previousLength + currentLength + 1, maxLength);
+            n = n >>> 1;
+        }
+
+        return maxLength;
+    }
+
 }

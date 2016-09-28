@@ -113,4 +113,20 @@ public class BitOpsTest
         Assert.assertEquals("0.1111111111111111111111111111111", BitOps.decimalToBinaryString(num));
     }
 
+    @Test
+    public void maxFlipOfZerosShouldBeOne() throws Exception {
+        Assert.assertEquals(1, BitOps.maxFlip(0));
+    }
+
+    @Test
+    public void maxFlipOfOnesShouldBeThrirtyTwo() throws Exception {
+        Assert.assertEquals(32, BitOps.maxFlip(~0));
+    }
+
+    @Test
+    public void maxFlipOfANumberShouldBeGreatestSumOfPairs() throws Exception {
+        int maxFlip = BitOps.maxFlip(Integer.parseInt("11011101111", 2));
+        Assert.assertEquals(8, maxFlip);
+    }
+
 }
