@@ -54,4 +54,31 @@ public class BitOps
 
         return (n & clearMask) | updateMask;
     }
+
+    public static String decimalToBinaryString(double num) {
+        if (num >= 1.0 || num <= 0.0) {
+            throw new IllegalArgumentException();
+        }
+
+        StringBuilder sb = new StringBuilder("0.");
+
+        while (num > 0) {
+            if (sb.length() - 2 > 32) {
+                throw new IllegalArgumentException();
+            }
+
+            double r = num * 2;
+
+            if (r >= 1.0) {
+                sb.append("1");
+                num = r - 1;
+            } else {
+                sb.append("0");
+                num = r;
+            }
+        }
+
+        return sb.toString();
+
+    }
 }

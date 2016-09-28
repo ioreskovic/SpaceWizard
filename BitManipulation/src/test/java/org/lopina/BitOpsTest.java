@@ -68,4 +68,49 @@ public class BitOpsTest
         int j = 2;
         BitOps.insert(m, n, i, j);
     }
+
+    @Test
+    public void toStringShouldCorrectlyStringifyPowersOfHalf() throws Exception {
+        Assert.assertEquals("0.1", BitOps.decimalToBinaryString(0.5 / 1.0));
+        Assert.assertEquals("0.01", BitOps.decimalToBinaryString(0.5 / 2.0));
+        Assert.assertEquals("0.001", BitOps.decimalToBinaryString(0.5 / 4.0));
+        Assert.assertEquals("0.0001", BitOps.decimalToBinaryString(0.5 / 8.0));
+        Assert.assertEquals("0.00001", BitOps.decimalToBinaryString(0.5 / 16.0));
+        Assert.assertEquals("0.000001", BitOps.decimalToBinaryString(0.5 / 32.0));
+        Assert.assertEquals("0.0000001", BitOps.decimalToBinaryString(0.5 / 64.0));
+        Assert.assertEquals("0.0000000000000000000000000000001", BitOps.decimalToBinaryString(0.5 / (1 << 30)));
+    }
+
+    @Test
+    public void toStringShouldCorrectlyStringifyMaxRepresentableNumber() throws Exception {
+        double num = 0.0;
+
+        for (int i = 0; i < 31; i++) {
+            num = num + (0.5 / (1 << i));
+        }
+
+        Assert.assertEquals("0.1111111111111111111111111111111", BitOps.decimalToBinaryString(num));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void stringifyingZeroAndBelowShouldThrowException() throws Exception {
+        BitOps.decimalToBinaryString(0.0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void stringifyingOneAndAboveShouldThrowException() throws Exception {
+        BitOps.decimalToBinaryString(1.0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void stringifyingAbove32BitsShouldThrowException() throws Exception {
+        double num = 0.0;
+
+        for (int i = 0; i < 33; i++) {
+            num = num + (0.5 / (1 << i));
+        }
+
+        Assert.assertEquals("0.1111111111111111111111111111111", BitOps.decimalToBinaryString(num));
+    }
+
 }
